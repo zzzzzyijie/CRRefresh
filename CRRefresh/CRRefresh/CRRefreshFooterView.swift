@@ -116,6 +116,13 @@ open class CRRefreshFooterView: CRRefreshComponent {
             rect.origin.y = targetY
             self.frame = rect
         }
+        
+        // Jie：这里控制 alpha （显示与隐藏
+        if scrollView.contentSize.height + self.animator.execute < scrollView.frame.height {
+            alpha = 0.0
+        } else {
+            alpha = 1.0
+        }
     }
     
     open override func offsetChange(change: [NSKeyValueChangeKey : Any]?) {
@@ -126,11 +133,12 @@ open class CRRefreshFooterView: CRRefreshComponent {
             return
         }
         
+        /// Jie: alpha的控制放到sizeChange里控制
         if scrollView.contentSize.height <= 0.0 || scrollView.contentOffset.y + scrollView.contentInset.top <= 0.0 {
-            alpha = 0.0
+            // alpha = 0.0
             return
         } else {
-            alpha = 1.0
+            // alpha = 1.0
         }
         
         if scrollView.contentSize.height + scrollView.contentInset.top > scrollView.bounds.size.height {
